@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  // setup font, text 
+  body {
+    @apply font-primary text-base antialiased font-normal mx-auto text-default;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 376px) and (max-width: 767px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn {
+  @apply rounded outline-none;
+}
+.btn-sm {
+  @apply px-4 font-medium
+}
+.badge {
+  @apply border-none
+}
+
+.input {
+  @apply rounded
+}
+input[type=checkbox] { 
+  @apply rounded
+}
+
+ 
+
+

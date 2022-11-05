@@ -1,0 +1,7 @@
+export const VALIDATE_EMAIL = 'VALIDATE_EMAIL'
+export const VALIDATE_REQUIRED = 'VALIDATE_REQUIRED'
+export const VALIDATE_MAX_LENGTH = 'VALIDATE_MAX_LENGTH'
+
+export const DELAY_MESSAGE = 4000
+
+export const PER_PAGE = 10
