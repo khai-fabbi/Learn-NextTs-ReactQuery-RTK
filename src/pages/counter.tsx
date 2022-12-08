@@ -1,5 +1,8 @@
+import 'react-datepicker/dist/react-datepicker.css'
+
 import type { ReactElement } from 'react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import ReactDatePicker from 'react-datepicker'
 
 import {
   decrement,
@@ -8,7 +11,14 @@ import {
   selectCount,
 } from '@/app/counterSlice'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
-import { fetchPostList, resetPostList, selectPostList } from '@/app/postSlice'
+import {
+  addPost,
+  fetchPostList,
+  resetPostList,
+  selectPostList,
+} from '@/app/postSlice'
+import { Input } from '@/components/input'
+import { CustomInputDatePicker } from '@/components/input/InputDatePicker'
 import { Meta } from '@/layouts/Meta'
 import type { NextPageWithLayout } from '@/models'
 import { Main } from '@/templates/Main'
@@ -16,6 +26,11 @@ import { Main } from '@/templates/Main'
 const Counter: NextPageWithLayout = () => {
   const counter = useAppSelector(selectCount)
   const postList = useAppSelector(selectPostList)
+
+  const [datePost, setDatePost] = useState<Date | null>(null)
+
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
 
   const [value, setValue] = useState(0)
   const dispatch = useAppDispatch()
@@ -26,10 +41,19 @@ const Counter: NextPageWithLayout = () => {
   const handleGetPostList = () => {
     dispatch(fetchPostList())
   }
-  useEffect(() => {
-    const promise = dispatch(fetchPostList())
-    return () => promise.abort()
-  }, [dispatch])
+  // useEffect(() => {
+  //   const promise = dispatch(fetchPostList())
+  //   return () => promise.abort()
+  // }, [dispatch])
+
+  const handleSubmitPost = () => {
+    const bodyValue = {
+      title,
+      body: description,
+    }
+    dispatch(addPost(bodyValue))
+  }
+
   return (
     <section>
       {/* counter */}
@@ -71,26 +95,60 @@ const Counter: NextPageWithLayout = () => {
 
       {/* post list */}
       <div className="mt-10">
-        <ul className="flex flex-col max-w-2xl gap-4">
-          {postList.length > 0 &&
-            postList.map((item) => (
-              <li key={item.id} className="capitalize">
-                <a
-                  href=""
-                  className="text-lg italic font-bold text-red-500 transition-all hover:text-red-600"
-                >
-                  {item.title}
-                </a>
-                <p>{item.body}</p>
-              </li>
-            ))}
-        </ul>
-        <button className="mt-4 btn btn-primary" onClick={handleResetPost}>
-          Reset
-        </button>
-        <button className="mt-4 btn btn-success" onClick={handleGetPostList}>
-          GET DATA
-        </button>
+        <div className="flex gap-10">
+          <div className="flex flex-col w-2/5 gap-y-5">
+            <Input
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <textarea
+              className="p-2 input input-primary min-h-[80px]"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <ReactDatePicker
+              selected={datePost}
+              onChange={(date) => setDatePost(date)}
+              placeholderText="date"
+              closeOnScroll
+              showTimeSelect
+              dateFormat="MMMM d, yyyy h:mm aa"
+              isClearable
+              customInput={
+                <CustomInputDatePicker className="w-full input input-primary" />
+              }
+              strictParsing
+            />
+          </div>
+          <ul className="flex flex-col max-w-2xl gap-4 grow">
+            {postList.length > 0 &&
+              postList.slice(0, 5).map((item) => (
+                <li key={item.id} className="capitalize">
+                  <a
+                    href=""
+                    className="text-lg italic font-bold text-red-500 transition-all hover:text-red-600"
+                  >
+                    {item.title}
+                  </a>
+                  <p>{item.body}</p>
+                </li>
+              ))}
+          </ul>
+        </div>
+
+        <div className="flex gap-x-4">
+          <button className="mt-4 btn btn-error" onClick={handleResetPost}>
+            Reset
+          </button>
+          <button className="mt-4 btn btn-success" onClick={handleGetPostList}>
+            GET DATA
+          </button>
+          <button className="mt-4 btn btn-primary" onClick={handleSubmitPost}>
+            POST
+          </button>
+        </div>
       </div>
     </section>
   )

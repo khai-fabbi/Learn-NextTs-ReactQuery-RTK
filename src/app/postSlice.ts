@@ -1,11 +1,13 @@
+import type { PayloadAction } from '@reduxjs/toolkit'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { v4 as uuidv4 } from 'uuid'
 
 import type { RootState } from './store'
 
 export interface PostState {
-  userId: number
-  id: number
+  userId?: number
+  id?: number | string
   title: string
   body: string
 }
@@ -50,6 +52,13 @@ export const postSlice = createSlice({
     resetPostList: (state) => {
       state.postList = []
     },
+    addPost: (
+      state,
+      action: PayloadAction<Omit<PostState, 'userId' | 'id'>>
+    ) => {
+      const post = { ...action.payload, id: uuidv4() }
+      state.postList.push(post)
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPostList.fulfilled, (state, action) => {
@@ -59,6 +68,6 @@ export const postSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { resetPostList } = postSlice.actions
+export const { resetPostList, addPost } = postSlice.actions
 export const selectPostList = (state: RootState) => state.post.postList
 export default postSlice.reducer
