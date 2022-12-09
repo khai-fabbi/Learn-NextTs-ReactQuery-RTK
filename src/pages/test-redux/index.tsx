@@ -1,7 +1,7 @@
 import 'react-datepicker/dist/react-datepicker.css'
 
 import type { ReactElement } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 
 import {
@@ -13,19 +13,22 @@ import {
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import {
   addPost,
+  deletePostItem,
   fetchPostList,
   resetPostList,
   selectPostList,
 } from '@/app/postSlice'
 import { Input } from '@/components/input'
 import { CustomInputDatePicker } from '@/components/input/InputDatePicker'
+import Loading from '@/components/loading/Loading'
 import { Meta } from '@/layouts/Meta'
 import type { NextPageWithLayout } from '@/models'
 import { Main } from '@/templates/Main'
 
-const Counter: NextPageWithLayout = () => {
+const TestRedux: NextPageWithLayout = () => {
   const counter = useAppSelector(selectCount)
   const postList = useAppSelector(selectPostList)
+  const loading = useAppSelector((state) => state.post.loading)
 
   const [datePost, setDatePost] = useState<Date | null>(null)
 
@@ -41,10 +44,10 @@ const Counter: NextPageWithLayout = () => {
   const handleGetPostList = () => {
     dispatch(fetchPostList())
   }
-  // useEffect(() => {
-  //   const promise = dispatch(fetchPostList())
-  //   return () => promise.abort()
-  // }, [dispatch])
+  useEffect(() => {
+    const promise = dispatch(fetchPostList())
+    return () => promise.abort()
+  }, [dispatch])
 
   const handleSubmitPost = () => {
     const bodyValue = {
@@ -52,6 +55,9 @@ const Counter: NextPageWithLayout = () => {
       body: description,
     }
     dispatch(addPost(bodyValue))
+  }
+  const handleDeletePostItem = (postItemId: number | string) => {
+    dispatch(deletePostItem(postItemId))
   }
 
   return (
@@ -123,16 +129,38 @@ const Counter: NextPageWithLayout = () => {
             />
           </div>
           <ul className="flex flex-col max-w-2xl gap-4 grow">
+            {loading && <Loading />}
             {postList.length > 0 &&
-              postList.slice(0, 5).map((item) => (
-                <li key={item.id} className="capitalize">
-                  <a
-                    href=""
-                    className="text-lg italic font-bold text-red-500 transition-all hover:text-red-600"
+              postList.slice(0, 4).map((item) => (
+                <li key={item.id} className="flex capitalize gap-x-10">
+                  <button
+                    className="btn btn-sm btn-circle btn-outline btn-warning"
+                    onClick={() => handleDeletePostItem(item.id)}
                   >
-                    {item.title}
-                  </a>
-                  <p>{item.body}</p>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                  <div>
+                    <a
+                      href=""
+                      className="text-lg italic font-bold text-red-500 transition-all hover:text-red-600"
+                    >
+                      {item.title}
+                    </a>
+                    <p>{item.body}</p>
+                  </div>
                 </li>
               ))}
           </ul>
@@ -153,10 +181,8 @@ const Counter: NextPageWithLayout = () => {
     </section>
   )
 }
-Counter.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Main meta={<Meta title="Counter" description="Counter" />}>{page}</Main>
-  )
+TestRedux.getLayout = function getLayout(page: ReactElement) {
+  return <Main meta={<Meta title="test" description="Test" />}>{page}</Main>
 }
 
-export default Counter
+export default TestRedux
