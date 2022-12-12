@@ -1,15 +1,10 @@
 import 'react-datepicker/dist/react-datepicker.css'
 
+import Link from 'next/link'
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 
-import {
-  decrement,
-  increment,
-  incrementByAmount,
-  selectCount,
-} from '@/app/counterSlice'
 import { useAppDispatch, useAppSelector } from '@/app/hook'
 import {
   addPost,
@@ -26,7 +21,6 @@ import type { NextPageWithLayout } from '@/models'
 import { Main } from '@/templates/Main'
 
 const TestRedux: NextPageWithLayout = () => {
-  const counter = useAppSelector(selectCount)
   const postList = useAppSelector(selectPostList)
   const loading = useAppSelector((state) => state.post.loading)
 
@@ -35,7 +29,6 @@ const TestRedux: NextPageWithLayout = () => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
 
-  const [value, setValue] = useState(0)
   const dispatch = useAppDispatch()
 
   const handleResetPost = () => {
@@ -59,49 +52,14 @@ const TestRedux: NextPageWithLayout = () => {
   const handleDeletePostItem = (postItemId: number | string) => {
     dispatch(deletePostItem(postItemId))
   }
+  console.log('abc')
 
   return (
     <section>
-      {/* counter */}
-      <div>
-        <div className="flex items-center justify-center">
-          <h2 className="flex items-center justify-center w-20 h-20 text-4xl text-red-500 rounded-full bg-slate-200">
-            {counter}
-          </h2>
-        </div>
-        <div className="flex items-center justify-center gap-5 mt-10">
-          <button
-            className="btn btn-primary"
-            onClick={() => dispatch(increment())}
-          >
-            Increment
-          </button>
-          <button
-            className="btn btn-accent"
-            onClick={() => dispatch(decrement())}
-          >
-            Decrement
-          </button>
-        </div>
-        <div className="flex items-center justify-center gap-5 mt-10">
-          <input
-            type="number"
-            className="input input-primary"
-            value={value}
-            onChange={(e) => setValue(Number(e.target.value))}
-          />
-          <button
-            className="btn btn-info"
-            onClick={() => dispatch(incrementByAmount(value))}
-          >
-            Increment Value
-          </button>
-        </div>
-      </div>
-
+      <h1 className="text-3xl font-bold text-black-origin">POST LIST</h1>
       {/* post list */}
       <div className="mt-10">
-        <div className="flex gap-10">
+        <div className="flex gap-16">
           <div className="flex flex-col w-2/5 gap-y-5">
             <Input
               placeholder="Title"
@@ -153,12 +111,16 @@ const TestRedux: NextPageWithLayout = () => {
                     </svg>
                   </button>
                   <div>
-                    <a
-                      href=""
-                      className="text-lg italic font-bold text-red-500 transition-all hover:text-red-600"
+                    <Link
+                      href={`test-redux/${item.id}`}
+                      legacyBehavior
+                      passHref
                     >
-                      {item.title}
-                    </a>
+                      <a className="text-lg italic font-bold text-red-500 transition-all hover:text-red-600">
+                        {item.title}
+                      </a>
+                    </Link>
+
                     <p>{item.body}</p>
                   </div>
                 </li>
