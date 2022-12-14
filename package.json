@@ -2,7 +2,7 @@
   "name": "next-js-boilerplate",
   "version": "3.0.0",
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "build-stats": "cross-env ANALYZE=true npm run build",

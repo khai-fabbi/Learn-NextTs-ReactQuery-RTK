@@ -1,7 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { setupListeners } from '@reduxjs/toolkit/dist/query'
 
-import { postApi } from './postService'
-import postReducer from './postSlice'
+import { postApi } from './services/postService'
+import postReducer from './slices/postSlice'
 
 const reducer = combineReducers({
   post: postReducer,
@@ -13,6 +14,7 @@ export const store = configureStore({
     getDefaultMiddleware().concat(postApi.middleware),
 })
 
+setupListeners(store.dispatch)
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}

@@ -3,8 +3,6 @@ import type { GetStaticProps } from 'next'
 import Link from 'next/link'
 import type { ReactElement } from 'react'
 
-import { useAppSelector } from '@/app/hook'
-import { selectPostList } from '@/app/postSlice'
 import { PaginatedItems } from '@/components/common'
 import { Meta } from '@/layouts/Meta'
 import type { NextPageWithLayout } from '@/models'
@@ -14,9 +12,6 @@ interface PostPageProps {
   posts: any[]
 }
 const PostPage: NextPageWithLayout<PostPageProps> = ({ posts }) => {
-  const postList = useAppSelector(selectPostList)
-  console.log(postList)
-
   return (
     <div className="">
       <h1 className="text-4xl font-semibold uppercase">Post Page</h1>
