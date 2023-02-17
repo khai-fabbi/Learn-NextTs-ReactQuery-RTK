@@ -11,6 +11,7 @@
 		color: #0a58ca;
 		background-color: #e9ecef;
 		border-color: #dee2e6;
+    border-radius: 4px;
 	}
 	&:focus {
 		z-index: 3;
@@ -101,6 +102,7 @@
 }
 .pagination {
 	display: flex;
+  align-items: center;
 	padding-left: 0;
 	// list-style: none;
 }

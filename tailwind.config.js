@@ -44,8 +44,6 @@ module.exports = {
           6: '#aaaaaa',
           7: '#6d7175',
           8: '#666666',
-          bor: '#e1e3e5',
-          line: '#c9c9c9',
         },
         black: {
           origin: '#000',
@@ -100,6 +98,7 @@ module.exports = {
     themes: [
       {
         mytheme: {
+          default: '#202223',
           primary: '#3D7AF2',
           secondary: '#212b36',
           accent: '#37CDBE',
