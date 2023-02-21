@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 import categoryApi from '@/api/category.api'
 import { PaginatedItems } from '@/components/common'
+import { Loading } from '@/components/loading'
 import { useToast } from '@/hooks'
 import { Meta } from '@/layouts/Meta'
 import type {
@@ -30,7 +31,11 @@ const CategoryApp: NextPageWithLayout = () => {
       setFilter({ ...filter, page: Number(router?.query.page) || 1 })
     }
   }, [router])
-  const { data: categoryRes, isError } = useQuery({
+  const {
+    data: categoryRes,
+    isError,
+    isLoading,
+  } = useQuery({
     select: (data) => data.data,
     queryKey: ['category', filter.page],
     queryFn: () => categoryApi.getAll({ page: filter.page }),
@@ -107,13 +112,19 @@ const CategoryApp: NextPageWithLayout = () => {
     }
     updateCategory({ ...formValue, id: categorySelected.id })
   }
-
   const handleChangePage = ({ selected }: { selected: number }) => {
     setFilter({ ...filter, page: selected + 1 })
+  }
+  const handlePrefetchCategoryDetail = (categoryId: number) => {
+    queryClient.prefetchQuery(['category-detail', String(categoryId)], {
+      queryFn: () => categoryApi.getById(`${categoryId}`),
+      staleTime: 10 * 1000,
+    })
   }
   if (isError) return <h1>Error</h1>
   return (
     <div>
+      {isLoading && <Loading />}
       <h1 className="text-3xl text-red-600">Category App</h1>
       <div className="divider text-black-origin" />
       <div className="flex gap-x-10">
@@ -124,6 +135,7 @@ const CategoryApp: NextPageWithLayout = () => {
               onClick={handleClickPost}
               onDelete={handleDeleteCategory}
               onEditable={handleSelectedCategory}
+              onPrefetchCategoryDetail={handlePrefetchCategoryDetail}
             />
             <PaginatedItems
               currentPage={filter.page}

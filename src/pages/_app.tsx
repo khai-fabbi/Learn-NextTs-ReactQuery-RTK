@@ -16,7 +16,13 @@ import { store } from '../app/store'
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page)

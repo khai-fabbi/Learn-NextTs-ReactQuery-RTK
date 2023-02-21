@@ -5,12 +5,14 @@ interface CategoryListProps {
   onClick: (id: number) => void
   onDelete?: (id: number) => void
   onEditable?: (id: number) => void
+  onPrefetchCategoryDetail?: (id: number) => void
 }
 const CategoryList = ({
   categoryList,
   onClick,
   onDelete,
   onEditable,
+  onPrefetchCategoryDetail,
 }: CategoryListProps) => {
   return (
     <ul className="flex flex-col gap-y-4">
@@ -45,6 +47,7 @@ const CategoryList = ({
             <h2
               className="text-xl font-bold capitalize transition-all duration-200 cursor-pointer w-fit hover:text-blue-400"
               onClick={() => onClick(id)}
+              onMouseEnter={() => onPrefetchCategoryDetail?.(id)}
             >
               {name}
             </h2>
