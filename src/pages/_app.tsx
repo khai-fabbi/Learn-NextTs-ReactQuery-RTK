@@ -1,30 +1,40 @@
 import '@/styles/main.scss'
 import '@/styles/pagination.scss'
 
+import type { EmotionCache } from '@emotion/react'
+import { CacheProvider } from '@emotion/react'
+import { CssBaseline } from '@mui/material'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import type { AppProps } from 'next/app'
 import type { ReactElement } from 'react'
-import { Provider } from 'react-redux'
 
-import { ToastContainer } from '@/components/toast'
-import { ToastProvider } from '@/context/ToastContext'
 import type { NextPageWithLayout } from '@/models'
+import lightThemeOptions from '@/styles/theme/light-theme-option'
+import createEmotionCache from '@/utils/createEmotionCache'
 
-import { store } from '../app/store'
+const clientSideEmotionCache = createEmotionCache()
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
+  emotionCache: EmotionCache
 }
 
-const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+const lightTheme = createTheme(lightThemeOptions)
+const MyApp = ({
+  Component,
+  emotionCache = clientSideEmotionCache,
+  pageProps,
+}: AppPropsWithLayout) => {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page)
   return (
-    <Provider store={store}>
-      <ToastProvider>
+    <CacheProvider value={emotionCache}>
+      <ThemeProvider theme={lightTheme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
         {getLayout(<Component {...pageProps} />)}
-        <ToastContainer />
-      </ToastProvider>
-    </Provider>
+      </ThemeProvider>
+    </CacheProvider>
   )
 }
 
