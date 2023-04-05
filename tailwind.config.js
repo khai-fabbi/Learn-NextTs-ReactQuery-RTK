@@ -35,8 +35,8 @@ module.exports = {
       },
       colors: {
         default: '#202223',
-        primary: '#3D7AF2',
-        secondary: '#212b36',
+        primary: '#570DF8',
+        secondary: '#F000B8',
         gray: {
           1: '#F5F5F5',
           2: '#c4c4c4',
@@ -75,17 +75,6 @@ module.exports = {
             opacity: 1,
           },
         },
-        flip: {
-          '0%': {
-            transform: 'perspective(200px) rotateX(0deg) rotateY(0deg)',
-          },
-          '50%': {
-            transform: 'perspective(200px) rotateX(180deg) rotateY(0deg)',
-          },
-          '100%': {
-            transform: 'perspective(200px) rotateX(180deg) rotateY(180deg)',
-          },
-        },
       },
     },
   },
@@ -98,16 +87,16 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          default: '#202223',
-          primary: '#3D7AF2',
-          secondary: '#212b36',
+          primary: '#570DF8',
+          secondary: '#F000B8',
           accent: '#37CDBE',
           neutral: '#3D4451',
+
+          'base-100': '#FFFFFF',
           info: '#3ABFF8',
-          success: '#aee9d1',
+          success: '#36D399',
           warning: '#FBBD23',
-          error: '#FF3636',
-          borderBase: '#e0e0e0',
+          error: '#F10E00',
         },
       },
     ],

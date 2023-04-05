@@ -6,6 +6,7 @@ import categoryApi from '@/api/category.api'
 import { PaginatedItems } from '@/components/common'
 import { Loading } from '@/components/loading'
 import { useToast } from '@/hooks'
+import { Main } from '@/layouts/Main'
 import { Meta } from '@/layouts/Meta'
 import type {
   Category,
@@ -14,7 +15,6 @@ import type {
   NextPageWithLayout,
 } from '@/models'
 import { CategoryForm, CategoryList } from '@/modules/category'
-import { Main } from '@/templates/Main'
 
 const CategoryApp: NextPageWithLayout = () => {
   const router = useRouter()

@@ -4,9 +4,9 @@ import * as React from 'react'
 
 import categoryApi from '@/api/category.api'
 import { Loading } from '@/components/loading'
+import { Main } from '@/layouts/Main'
 import { Meta } from '@/layouts/Meta'
 import type { NextPageWithLayout } from '@/models'
-import { Main } from '@/templates/Main'
 
 const CategoryDetail: NextPageWithLayout = () => {
   const router = useRouter()

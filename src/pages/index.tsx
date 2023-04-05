@@ -1,8 +1,8 @@
 import type { ReactElement } from 'react'
 
+import { Main } from '@/layouts/Main'
 import { Meta } from '@/layouts/Meta'
 import type { NextPageWithLayout } from '@/models'
-import { Main } from '@/templates/Main'
 
 const Index: NextPageWithLayout = () => {
   return (

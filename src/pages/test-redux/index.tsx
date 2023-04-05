@@ -21,9 +21,9 @@ import {
 import { Input } from '@/components/input'
 import { CustomInputDatePicker } from '@/components/input/InputDatePicker'
 import Loading from '@/components/loading/Loading'
+import { Main } from '@/layouts/Main'
 import { Meta } from '@/layouts/Meta'
 import type { NextPageWithLayout } from '@/models'
-import { Main } from '@/templates/Main'
 
 const TestRedux: NextPageWithLayout = () => {
   const counter = useAppSelector(selectCount)

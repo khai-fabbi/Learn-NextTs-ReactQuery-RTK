@@ -3,9 +3,9 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 
 import postsApi from '@/api/post.api'
+import { Main } from '@/layouts/Main'
 import { Meta } from '@/layouts/Meta'
 import type { NextPageWithLayout } from '@/models'
-import { Main } from '@/templates/Main'
 
 const PostTestDetail: NextPageWithLayout = () => {
   const router = useRouter()

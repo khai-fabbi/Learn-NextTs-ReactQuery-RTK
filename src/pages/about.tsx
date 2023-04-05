@@ -14,9 +14,9 @@ import { Label } from '@/components/label'
 import { ModalInformation } from '@/components/modal'
 import { TogglePrimary } from '@/components/toggle'
 import { useHover, useToast, useToggle } from '@/hooks'
+import { Main } from '@/layouts/Main'
 import { Meta } from '@/layouts/Meta'
 import type { NextPageWithLayout } from '@/models'
-import { Main } from '@/templates/Main'
 
 const About: NextPageWithLayout = () => {
   const [isOpen, setIsOpen] = useState(false)

@@ -6,9 +6,9 @@ import type { ReactElement } from 'react'
 import { useAppSelector } from '@/app/hook'
 import { selectPostList } from '@/app/postSlice'
 import { PaginatedItems } from '@/components/common'
+import { Main } from '@/layouts/Main'
 import { Meta } from '@/layouts/Meta'
 import type { NextPageWithLayout } from '@/models'
-import { Main } from '@/templates/Main'
 
 interface PostPageProps {
   posts: any[]
